@@ -6,58 +6,66 @@ Third Assignment in OOP course in Python @Ariel_University_2021
 * Cohen Ben : 207029786  
 
 # Topic of the Assignment number 3 :
-we want to solve the problem of the call attribution to the elevators with the language Python.
+This assignment 3 is dedicated to the design and implementation of data structures and algorithms on graphs (directed and weighted)
 
-# Ex1 Contain 3 classes :
-* Mycalls.py :
-  * timeCall
-  * src -> source floor
-  * dest -> destination floor
-  * elev -> elevator num
-  * time_get_src -> time to get to source
-  * time_get_dest -> time to get to destination
-  * time_wait = time_get_dest - timeCall   -> time you are waiting for an elevator
-* MyBuilding.py :
-  * NOE -> number of elevator
-  * floorTime
-  * speed 
-  * max_floor 
-  * min_floor 
-  * TOTAL_TIME_WAIT -> time total you are waiting for an elevator 
-* Ex1.py (this is our algo) :
-  * def Betstop -> This func count how many stop will be with allocate to elevator number 'i'
-  * def checkIfCost -> This func check if will be costing waiting time if we allocate the call to elevator number 'i'
-  * def Checklaststop -> This func checks where is the last stop and how much is good to allocate to this elevator
-  * def addHeaders -> This func is add header to svc file
-  * def removeHeaders -> This func is remove header to svc file
-  * def allocatecalls -> This func is allocate the call to the svc
-  * def check -> This func check the waiting time and elevator
-  * def allocate -> it's for our main : we are taking the Building, calls and the name of my output
-  * if __name__ == '__main__':  our main
-
+# Ex2 Contain 5 Interfaces :
+* DirectedWeightedGraph
+  * getNode(int key)  --> Returns the node_data by the node_id(key).
+  * getEdge(int src, int dest)  --> Returns the data of the edge (src,dest), null if none. In O(1).
+  * addNode(NodeData n)  --> Adds a new node to the graph with the given node_data in O(1).
+  * connect(int src, int dest, double w)  --> Connects an edge with weight w between node src to node dest in O(1).
+  * Iterator<NodeData> nodeIter()  --> Returns an Iterator for the collection representing all the nodes in the graph.
+  * Iterator<EdgeData> edgeIter()  --> Returns an Iterator for all the edges in this graph.
+  * Iterator<EdgeData> edgeIter(int node_id)  --> Returns an Iterator for edges getting out of the given node (all the edges starting (source) at the given node).
+  * removeNode(int key)  --> Deletes the node (with the given ID) from the graph and removes all edges which starts or ends at this node in O(k).
+  * removeEdge(int src, int dest)  --> Deletes the edge from the graph in O(1).
+  * nodeSize()  --> Returns the number of vertices (nodes) in the graph in O(1).
+  * edgeSize()  --> Returns the number of edges (assume directional graph) in O(1).
+  * getMC()  --> Returns the Mode Count - for testing changes in the graph.
+ 
+* DirectedWeightedGraphAlgorithms
+  * init(DirectedWeightedGraph g) --> Inits the graph on which this set of algorithms operates on.
+  * getGraph() --> Returns the underlying graph of which this class works.
+  * copy() --> Computes a deep copy of this weighted graph.
+  * isConnected() -->  Returns true if and only if (iff) there is a valid path from each node to each other node.
+  * shortestPathDist(int src, int dest) --> Computes the length of the shortest path between src to dest.
+  * shortestPath(int src, int dest) --> Computes the the shortest path between src to dest - as an ordered List of nodes: src--> n1-->n2-->...dest
+  * center() --> Finds the NodeData which minimizes the max distance to all the other nodes.
+  * tsp(List<NodeData> cities) --> Computes a list of consecutive nodes which go over all the nodes in cities.
+  * save(String file) -->  Saves this weighted (directed) graph to the given file name - in JSON format
+  * load(String file) --> This method loads a graph to this graph algorithm.
+ 
+* EdgeData
+  * getSrc() --> The id of the source node of this edge.
+  * getDest() --> The id of the destination node of this edge
+  * getWeight() --> Returns the weight of this edge (positive value).
+  * getInfo() --> Returns the remark (meta data) associated with this edge.
+  * setInfo(String s) --> Allows changing the remark (meta data) associated with this edge.
+  * getTag() --> Temporal data (aka color: e,g, white, gray, black) which can be used be algorithms
+  * setTag(int t) --> This method allows setting the "tag" value for temporal marking an edge - common practice for marking by algorithms.
+ 
+* GeoLocation
+  * x()
+  * y()
+  * z()
+  * distance(GeoLocation g)
+ 
+* NodeData
+  * getKey() --> Returns the key (id) associated with this node.
+  * getLocation() --> Returns the location of this node, if none return null.
+  * setLocation(GeoLocation p) --> Allows changing this node's location.
+  * getWeight() --> Returns the weight associated with this node.
+  * setWeight(double w) --> Allows changing this node's weight.
+  * getInfo() --> Returns the remark (meta data) associated with this node.
+  * setInfo(String s) --> Allows changing the remark (meta data) associated with this node.
+  * getTag() -->Temporal data (aka color: e,g, white, gray, black) which can be used be algorithms.
+  * setTag(int t) --> Allows setting the "tag" value for temporal marking an node - common practice for marking by algorithms.
+ 
+# Ex2 Contain 5 implementations :
+ 
 # UML :
 <p align="center">
   <img align="center" width=100% src = "https://user-images.githubusercontent.com/55143087/142608757-f5ebc791-2c3a-41b4-92ee-df11e5b28db8.png"/>
 </p>
   
-# Algorithm offline :
-* 1.1 We pass on each call i going through all the elevators in the building to assign the best, then we check:
-* 1.2 We are calculating where is the elevator
-* 1.3 If :
-  * 1.3.1 elevator is going UP or Down 
-  * 1.3.2 AND the source floor is BELOW or ABOVE the position of the elevator 
-  * 1.3.3 AND if it's the shortest time for a call -> take the elevator.
-* 1.4 If there is any call for the elevator :
-  * 1.4.1 check if the call time of the elevator is the shortest
-  * 1.4.2 give the elevator
-* 1.5 At the End update all calls in the program's out file.
 
-# The Elevator-Algorithm as implemented in the jar is defined as follows:
-* 1.1 Each elevator has a “flag” of UP/DOWN, and its start position is floor 0.
-* 1.2 At the beginning, once the first call arrives, the flag is defined to the value UP/DOWN according to the src value (is below 0 → DOWN, above 0 → UP).
-* 1.3 In case the elevator’s flag==True (UP), it will “go to” the closest floor above its current position. If none - it will change the flag = DOWN.
-* 1.4 In case the elevator’s flag==False (DOWN), it will “go to” the closest floor below its current position. If none - it will change the flag = UP.
-* 1.5 If the list of calls is Empty it will remain in LEVEL - state.
-
-The expected time the elevator will travel from floor_a to floor_b is:
-CloseTime + StartTime + df/speed + StopTime + OpenTime (df == |floor_a-floor_b).
