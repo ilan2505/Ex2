@@ -8,6 +8,19 @@ Third Assignment in OOP course in Python @Ariel_University_2021
 # Topic of the Assignment number 3 :
 This assignment 3 is dedicated to the design and implementation of data structures and algorithms on graphs (directed and weighted)
 
+# Libraries usded in this assignment :
+ * 1)
+ * 2)
+
+# Analysis of the performance of our algorithms on size graphs :
+ * 1 000 :
+ * 10 000 :
+ * 100 000 :
+ * 1 000 000 :
+
+# Explanation of how to download, run and use the graphical interface :
+
+ 
 # Ex2 Contains 5 Interfaces :
 1) DirectedWeightedGraph
 2) DirectedWeightedGraphAlgorithms
@@ -132,6 +145,24 @@ This assignment 3 is dedicated to the design and implementation of data structur
  * setInfo(String s) --> Allows changing the remark (meta data) associated with this node.
  * getTag() -->Temporal data (aka color: e,g, white, gray, black) which can be used be algorithms.
  * setTag(int t) --> Allows setting the "tag" value for temporal marking an node - common practice for marking by algorithms.
+  
+
+# Ex2 Contains also these classes :
+  * DFS -->
+  * Ex2 -->
+  * MenuExample -->
+  * MyShortedPath -->
+  * Mytsp -->
+  * StdDraw -->
+  * ijframe -->
+  
+# There is a folder "Tests" that we are running with JUnit :
+  * MyDirectedWeightedGraphAlgorithmsTest
+  * MyDirectedWeightedGraphTest
+  * MyEdgeDataTest
+  * MyGeoLocationTest
+  * MyNodeDataTest
+  
  
  
  
