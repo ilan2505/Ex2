@@ -9,7 +9,7 @@ public class DirectedWeigtet implements DirectedWeightedGraph {
     int w;
     int MC;
     HashMap<NodeData, HashMap<NodeData, EdgeData>> edge;
-    HashMap<NodeData, HashMap<NodeData, EdgeData>> edgein;
+    HashMap<Integer, HashMap<Integer, EdgeData>> edgein;
     int edgeSize;
 
     public DirectedWeigtet() {
@@ -61,14 +61,26 @@ public class DirectedWeigtet implements DirectedWeightedGraph {
         NodeData src1 = getNode(src);
         EdgeData e = new EdgeDatas(src, w, dest);
         HashMap<NodeData, EdgeData> t = new HashMap<>();
+        HashMap<Integer, EdgeData> tin = new HashMap<>();
+
         t.put(dest1, e);
+        tin.put(src, e);
+
         if (this.edge.get(src1) != null) {
-            if (this.edge.get(src1).get(dest1) != null) {
-                //   removeEdge(src,dest);
-            }
+
             this.edge.get(src1).put(dest1, e);
         } else {
             this.edge.put(src1, t);
+
+        }
+
+        if (this.edgein.get(dest) != null) {
+            this.edgein.get(dest).put(src, e);
+
+
+        } else {
+
+            this.edgein.put(dest, tin);
         }
         this.MC++;
         this.edgeSize++;
@@ -89,14 +101,17 @@ public class DirectedWeigtet implements DirectedWeightedGraph {
 
 
             ArrayList<EdgeData> ADATA = new ArrayList<>();
-            for (int i = 0; i < node.size(); i++) {
-                NodeData n = node.get(i);
-                if (edgeIter(i) != null) {
-                    Iterator<EdgeData> t = edgeIter(i);
+           Object c[]= node.keySet().toArray();
+         //  System.out.println(Arrays.toString(c));
+            for (int i = 0; i < c.length; i++) {
+                NodeData n = node.get((int)c[i]);
+                if (edgeIter((int)c[i] ) != null) {
+
+                    Iterator<EdgeData> t = edgeIter((Integer) c[i]);
                     while (t.hasNext()) {
                         EdgeData thisedge = (EdgeData) t.next();
                         ADATA.add(thisedge);
-                    }
+                   }
                 }
             }
             Iterator<EdgeData> t = ADATA.iterator();
@@ -113,16 +128,17 @@ public class DirectedWeigtet implements DirectedWeightedGraph {
         Iterator<EdgeData> ie = null;
 
         try {
-            {
+
                 NodeData N = getNode(node_id);
                 if (this.edge.get(N) != null) {
                     EdgeData[] t = this.edge.get(N).values().toArray(new EdgeData[0]);
                     ie = Arrays.stream(t).iterator();
+
                 }
 
-            }
+
         } catch (RuntimeException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return ie;
 
@@ -130,26 +146,43 @@ public class DirectedWeigtet implements DirectedWeightedGraph {
 
     @Override
     public NodeData removeNode(int key) {
-        NodeData n = getNode(key);
-        int t = this.edge.get(n).size();
-        System.out.println("t=" + key);
-        this.edgeSize -= t;
-        removeEdge(key);
-        node.remove(key);
-        this.MC++;
-        return n;
+        if (getNode(key) != null) {
+
+            NodeData n = getNode(key);
+            NodeData t1[]=edge.get(n).keySet().toArray(new NodeData[0]);
+
+            int t = this.edge.get(n).size();
+            System.out.println("t=" + t);
+            this.edgeSize -= t;
+            removeEdge(key);
+            node.remove(key);
+            edge.remove(n);
+            this.MC++;
+            return n;
+        }
+        return null;
     }
 
     private void removeEdge(int key) {
-        NodeData N = getNode(key);
-        this.edge.remove(N);
-        for (int i = 0; i < this.node.size(); i++) {
-            if (i != key) {
-               // System.out.println(key);
-                removeEdge(i, key);
+        Object[] src1 = edgein.get(key).keySet().toArray();
+        for (int i = 0; i < src1.length; i++) {
+            System.out.println(src1[i]+"!");
+            removeEdge((Integer) src1[i],key);
             }
+
+
         }
-    }
+        /**
+         NodeData N = getNode(key);
+         this.edge.remove(N);
+         for (int i = 0; i < this.node.size(); i++) {
+         if (i != key) {
+         // System.out.println(key);
+         removeEdge(i, key);
+         }
+         }
+         */
+
 
     @Override
     public EdgeData removeEdge(int src, int dest) {
@@ -160,7 +193,7 @@ public class DirectedWeigtet implements DirectedWeightedGraph {
             if (this.edge.get(src1).get(dest1) != null) {
                 e = this.edge.get(src1).get(dest1);
                 this.edgeSize--;
-             //   System.out.println(src + "," + dest);
+                //   System.out.println(src + "," + dest);
                 this.edge.get(src1).remove(dest1);
                 this.MC++;
 

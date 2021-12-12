@@ -30,7 +30,8 @@ public class RunGUiTest {
             StdDraw.point(x, y);
         }
         Iterator<EdgeData> itNode = t.edgeIter();
-
+        System.out.println(t.edgeSize()+"edges");
+        int t333=0;
         while (itNode.hasNext()) {
             StdDraw.setPenRadius(0.01);
             StdDraw.setPenColor(StdDraw.BLUE);
@@ -47,6 +48,8 @@ public class RunGUiTest {
 
             double x2 = (dest.getLocation().x());
             double y2 = (dest.getLocation().y());
+            System.out.println(++t333);
+            System.out.println(ed.src+","+ed.dest);
 
 
             StdDraw.line(x1, y1, x2, y2);

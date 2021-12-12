@@ -12,16 +12,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+
 public class Algo implements DirectedWeightedGraphAlgorithms {
     DirectedWeightedGraph e;
 
     public Algo() {
 
-        //this.e = new DirectedWeigtet();
+        this.e = new DirectedWeigtet();
     }
 
     @Override
     public void init(DirectedWeightedGraph g) {
+        // System.out.println(g.nodeSize());
         this.e = g;
     }
 
@@ -92,16 +94,17 @@ public class Algo implements DirectedWeightedGraphAlgorithms {
                     mat[i][j] = e.getEdge(i, j).getWeight();
                 } else {
                     mat[i][j] = Double.MAX_VALUE;
-                    if (i == j && e.getNode(i) != null && e.getNode(j) != null) {
+                    if (i == j) {
                         mat[i][j] = 0;
                     }
                 }
             }
         }
+
         for (int k = 0; k < size; k++) {
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
-                    if (mat[i][j] > mat[i][k] + mat[k][j]) {
+                    if (mat[i][j] > mat[i][k] + mat[k][j] ) {
                         mat[i][j] = mat[i][k] + mat[k][j];
                     }
                 }
@@ -111,16 +114,15 @@ public class Algo implements DirectedWeightedGraphAlgorithms {
         Double min = Double.MAX_VALUE;
         for (int i = 0; i < size; i++) {
             double max = Double.MIN_VALUE;
-            for (int j =0 ; j < size; j++) {
-            //    System.out.print((int) mat[i][j] + ",");
+            for (int j = 0; j < size; j++) {
 
                 if (mat[i][j] > max&&mat[i][j]<Double.MAX_VALUE) {
-
                     max = mat[i][j];
                 }
 
             }
-            if (max < min) {
+            if (max < min && max > 0&&e.getNode(i)!=null) {
+
 
                 min = max;
                 center1 = i;
@@ -128,7 +130,7 @@ public class Algo implements DirectedWeightedGraphAlgorithms {
             }
         }
 
-      //  System.out.println(center1);
+        //  System.out.println(center1);
         return e.getNode(center1);
 
     }
@@ -141,25 +143,55 @@ public class Algo implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public boolean save(String file) {
-        FileWriter file1;
-        JSONObject obj = new JSONObject();
-        e.nodeIter();
-        HashMap<Integer, Integer> eee = new HashMap<>();
-        obj.put("Edges", 100);
-        try {
-            file1 = new FileWriter(file);
-            file1.write(obj.toString());
-            file1.write(e.nodeIter().toString());
-            return false;
+        JSONObject myobj = new JSONObject();
+        JSONArray edge_arr = new JSONArray();
+        myobj.put("Edges", edge_arr);
+        JSONArray node_arr = new JSONArray();
+        myobj.put("Nodes", node_arr);
+        Iterator<EdgeData> itr_edge = this.e.edgeIter();
+        while (itr_edge.hasNext()) {
+            EdgeData temp = itr_edge.next();
+            JSONObject edge_obj = new JSONObject();
+            edge_obj.put("src", temp.getSrc());
+            edge_obj.put("w", temp.getWeight());
+            edge_obj.put("dest", temp.getDest());
+            edge_arr.put(edge_obj);
+        }
+        Iterator<NodeData> itr_nodes = this.e.nodeIter();
+        while (itr_nodes.hasNext()) {
+            NodeData temp = itr_nodes.next();
+            JSONObject node_obj = new JSONObject();
+            node_obj.put("pos", temp.getLocation().x() + "," + temp.getLocation().y() + "," + temp.getLocation().z());
+            node_obj.put("id", temp.getKey());
+            node_arr.put(node_obj);
+        }
+        try (FileWriter f = new FileWriter(file)) {
+             f.write(myobj.toString());
+            f.flush();
+
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
+
     }
 
     @Override
     public boolean load(String file) throws IOException {
-        //TestHash.Myload(e,file);
+        System.out.println(file + "!");
+
+        try {
+              DirectedWeigtet g = TestHash.graph(file);
+             System.out.println(g.edgeSize+"!!");
+
+
+               init(g);
+
+            return true;
+        } catch (RuntimeException | InterruptedException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 }

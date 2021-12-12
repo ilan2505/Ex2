@@ -16,19 +16,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class TestHash {
-    //public static void   Myload(DirectedWeightedGraph g, String File) throws IOException {
     public static void main(String[] args) throws IOException, InterruptedException {
-
+        graph("C:/G1.json");
     }
 
-    public static DirectedWeigtet graph() throws IOException {
+    public static DirectedWeigtet graph(String file1) throws IOException, InterruptedException {
         DirectedWeightedGraphAlgorithms alg = new Algo();
         DirectedWeigtet g = new DirectedWeigtet();
-        String file = "c:/G1.json";
+        String file = file1;
         String content = new String(Files.readAllBytes(Paths.get(file)));
         JSONObject obj = new JSONObject(content);
-
-
         JSONArray objArr1 = obj.getJSONArray("Nodes".trim());
         for (int i = 0; i < objArr1.length(); i++) {
             JSONObject x1 = objArr1.getJSONObject(i);
@@ -70,10 +67,14 @@ public class TestHash {
         }
         //   g.removeEdge(0,1);
         //g.removeEdge(1,0);
-        // g.removeNode(0);
+        System.out.println(g.edgeSize);
+
+       // g.removeNode(0);
+
         DirectedWeightedGraphAlgorithms al = new Algo();
         al.init(g);
         System.out.println(al.isConnected());
+        System.out.println(g.edgeSize);
 
         //System.out.println(al.center().getKey());
         // System.out.println("dist=" + al.shortestPath(0, 7));
@@ -91,6 +92,7 @@ public class TestHash {
         //
         pp(g);
         //RunGUiTest.test(al,g);
+        al.save("G4.json");
 
         return g;
     }
