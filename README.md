@@ -9,8 +9,7 @@ Third Assignment in OOP course in Python @Ariel_University_2021
 This assignment 3 is dedicated to the design and implementation of data structures and algorithms on graphs (directed and weighted)
 
 # Libraries usded in this assignment :
- * 1)
- * 2)
+ * gson-2.8.6.jar
 
 # Analysis of the performance of our algorithms on size graphs :
  * 1 000 :
@@ -29,15 +28,15 @@ This assignment 3 is dedicated to the design and implementation of data structur
 5) NodeData
   
 # Ex2 Contains 5 implementations :
- 1) MyDirectedWeightedGraph
- 2) MyDirectedWeightedGraphAlgorithms
- 3) MyEdgeData
- 4) MyGeoLocation
- 5) MyNodeData
+ 1) DirectedWeigtet
+ 2) Algo
+ 3) EdgeDatas
+ 4) MyLoc
+ 5) ND
  
-# 1) MyDirectedWeightedGraph
+# 1) DirectedWeigtet
   This class is a directed graph with implementation of DirectedWeightedGraph.
-  In the folder "Tests" with have the JUNIT test of this class.
+  The JUNIT test of this class is DirectedWeigtetTest.
  
  Objects of this class :
  * HashMap<Integer, NodeData> node
@@ -62,9 +61,9 @@ This assignment 3 is dedicated to the design and implementation of data structur
   * edgeSize()  --> Returns the number of edges (assume directional graph) in O(1).
   * getMC()  --> Returns the Mode Count - for testing changes in the graph.
  
-# 2) MyDirectedWeightedGraphAlgorithms
+# 2) Algo
  This class is an implementation of DirectedWeightedGraphAlgorithms.
- In the folder "Tests" with have the JUNIT test of this class.
+ The JUNIT test of this class is AlgoTest
  
  Objects of this class :
  * DirectedWeightedGraph e
@@ -86,9 +85,8 @@ This assignment 3 is dedicated to the design and implementation of data structur
  * save(String file) -->  Saves this weighted (directed) graph to the given file name - in JSON format
  * load(String file) --> This method loads a graph to this graph algorithm.
  
- # 3) MyEdgeData
+ # 3) EdgeDatas
    This class is an edge in directed graph with implementation of EdgeData.
-   In the folder "Tests" with have the JUNIT test of this class.
  
  Objects of this class :
  * int src;
@@ -107,9 +105,8 @@ This assignment 3 is dedicated to the design and implementation of data structur
  * getTag() --> Temporal data (aka color: e,g, white, gray, black) which can be used be algorithms
  * setTag(int t) --> This method allows setting the "tag" value for temporal marking an edge - common practice for marking by algorithms.
  
- # 4) MyGeoLocation
+ # 4) MyLoc
    This class is a location in the space (x,y,z) with implementation of GeoLocation.
-   In the folder "Tests" with have the JUNIT test of this class.
  
  Objects of this class :
  * double x;
@@ -123,9 +120,8 @@ This assignment 3 is dedicated to the design and implementation of data structur
  * z()
  * distance(GeoLocation g)
  
- # 5) MyNodeData
+ # 5) ND
    This class is an implementation of NodeData.
-   In the folder "Tests" with have the JUNIT test of this class.
  
  Objects of this class :
  * double id;
