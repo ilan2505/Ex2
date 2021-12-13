@@ -11,20 +11,37 @@ This assignment 3 is dedicated to the design and implementation of data structur
 # Libraries usded in this assignment :
  * gson-2.8.6.jar
 
+# Explanations  :
+* For this graphical interface (GUI), this interface needs the classes MYwindow, DisplayGraphics. 
+* We are creating vertices using hashmap.
+* We are creating edges using hashmap in hashmap.
+* for the center, we are using matrixes.
+* The shortest route (path) is realized using Dykstra algorithme (DFS).
+
 # Analysis of the performance of our algorithms on size graphs :
  * 1 000 :
+   * shortestPath() : 69 ms
+   * center() : 1 sec 520 ms
+   * tsp() : 
+   * isconnected() : 10 ms
+   * shortestPathDist() : 11 ms
  * 10 000 :
+   * shortestPath() : 1 sec 328 ms
+   * center() : timeout
+   * tsp() : 
+   * isconnected() : 47 ms
+   * shortestPathDist() : 1 sec 438 ms
  * 100 000 :
- * 1 000 000 :
+   * shortestPath() : 2 min 6 sec
+   * center() : 1 sec 520 ms
+   * tsp() : 2 ms
+   * isconnected() : 896 ms
+   * shortestPathDist() : 2 min 19 sec
 
 # UML of the project :
 <p align="center">
   <img align="center" width=100% src = "https://user-images.githubusercontent.com/55143087/145866107-1089d813-4451-46c7-a4bf-0969fb9d11f6.png"/>
 </p>
-
-
-# Explanation of how to download, run and use the graphical interface :
-
  
 # Ex2 Contains 5 Interfaces :
 1) DirectedWeightedGraph
@@ -150,23 +167,22 @@ This assignment 3 is dedicated to the design and implementation of data structur
   
 
 # Ex2 Contains also these classes :
-  * DFS -->
-  * DisplayGraphics -->
-  * Ex2 -->
-  * MYwindow -->
-  * MenuExample -->
-  * MyShortedPath -->
-  * Mytsp -->
-  * Point2D -->
-  * ijframe -->
+  * DFS --> we need in the algo.java for the isConnected().
+  * DisplayGraphics -->need for the graphical interface.
+  * Ex2 --> the .java that we need to run.
+  * MYwindow --> need for the graphical interface.
+  * MenuExample --> need for the graphical interface.
+  * MyShortedPath --> we need in the algo.java for the shortestPathDist(int src, int dest) , shortestPath(int src, int dest).
+  * Mytsp --> we need in the algo.java for the tsp(List<NodeData> cities).
+  * ijframe --> need for the graphical interface.
   
 # Tests that we are running with JUnit :
-  * AlgoTest -->
-  * DirectedWeigtetTest -->
-  * JFrametest -->
-  * RunGUiTest -->
-  * TestHash -->
-  * iteratortest -->
+  * AlgoTest 
+  * DirectedWeigtetTest 
+  * JFrametest 
+  * RunGUiTest 
+  * TestHash 
+  * iteratortest 
   
  
  
