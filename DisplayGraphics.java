@@ -2,50 +2,79 @@
 
 //import MenuExample;
 
+import api.DirectedWeightedGraph;
 import api.DirectedWeightedGraphAlgorithms;
+import api.GeoLocation;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Line2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class DisplayGraphics extends Canvas {
+public class DisplayGraphics extends Canvas implements MouseListener {
     DirectedWeightedGraphAlgorithms myalgo;
-    Menu menu, submenu, submenu1;
-    MenuItem i1, i2, i3, i4, i5, i6;
-
-    // ArrayList<GeoLocation> pointList = new ArrayList<>();
-    DirectedWeightedGraphAlgorithms algo = new Algo();
-    private int kRADIUS = 5;
-    private int window_H = 1000;
-    private int window_W = 1000;
+    DirectedWeightedGraph MyGraph;
+    HashMap<Point2D, GeoLocation> points;
+    HashMap<Point2D, HashMap<Point2D, Double>> edges;
     Graphics g;
 
 
     public DisplayGraphics(DirectedWeightedGraphAlgorithms algo1) {
+        super();
         this.myalgo = algo1;
+        MyGraph = myalgo.getGraph();
+        this.setBackground(Color.DARK_GRAY);
+        this.addMouseListener(this);
+        this.myalgo = algo1;
+        points = TestHash.pp((DirectedWeigtet) MyGraph);
+        this.edges = TestHash.ed((DirectedWeigtet) MyGraph);
     }
 
+    public static void addEdge(Point2D a, Point2D b, ArrayList<Point2D> edges) {
+        edges.add(a);
+        edges.add(b);
+
+    }
+
+    public HashMap<Point2D, HashMap<Point2D, Double>> getEdges() {
+        return edges;
+    }
+
+    public void setEdges(Point2D t, Point2D q) {
+        this.edges.get(t).put(q, 1.1);
+
+    }
+
+    public void reset() {
+        this.points = new HashMap<>();
+        this.edges = new HashMap<>();
+        this.repaint();
+    }
 
     public void paint(Graphics g) {
         this.g = g;
+        super.paint(g);
         setBackground(Color.YELLOW);
-        setForeground(Color.BLACK);
-        DirectedWeigtet gg = (DirectedWeigtet) myalgo.getGraph();
-        ArrayList<Point2D> p = (ArrayList<Point2D>) TestHash.pp(gg);
-        double sizes[] = checksizes(p);
-        for (int i = 0; i < p.size(); i++) {
-            DrawPoint(p.get(i),sizes);
+        double sizes[] = checksizes(points);
+        Object poi[] = points.keySet().toArray();
+        for (int i = 0; i < poi.length; i++) {
+            DrawPoint((Point2D) poi[i], sizes);
         }
-        ArrayList<Point2D> egges = TestHash.ed(gg);
-        for (int i = 0; i < egges.size(); i = i + 2) {
-            Drawline(egges.get(i), egges.get(i + 1), sizes);
+        Object srcc[] = edges.keySet().toArray();
+        for (int i = 0; i < srcc.length; i++) {
+            Object destt[] = edges.get(srcc[i]).keySet().toArray();
+            for (int j = 0; j < destt.length; j++) {
+                Drawline((Point2D) srcc[i], (Point2D) destt[j], sizes);
+
+            }
         }
+
     }
 
-    private void DrawPoint(Point2D po, double[] sizes) {
+    public void DrawPoint(Point2D po, double[] sizes) {
+        g.setColor(Color.BLACK);
         Double xdist = sizes[1] - sizes[0];
         double xx = ((950 / xdist) * (po.getX() - sizes[0]));
         Double ydist = (sizes[3] - sizes[2]);
@@ -54,6 +83,7 @@ public class DisplayGraphics extends Canvas {
     }
 
     private void Drawline(Point2D src, Point2D dest, double[] sizes) {
+        g.setColor(Color.green);
         Double x1 = src.getX();
         Double y1 = src.getY();
         Double x2 = dest.getX();
@@ -64,15 +94,15 @@ public class DisplayGraphics extends Canvas {
         double y11 = (950 / ydist) * (y1 - sizes[2]);
         double x21 = ((950 / xdist) * (x2 - sizes[0]));
         double y21 = (950 / ydist) * (y2 - sizes[2]);
-        Point2D dir=new Point2D() {
+        Point2D dir = new Point2D() {
             @Override
             public double getX() {
-                return 0.9*x21+0.1*x11;
+                return 0.9 * x21 + 0.1 * x11;
             }
 
             @Override
             public double getY() {
-                return 0.9*y21+0.1*y11;
+                return 0.9 * y21 + 0.1 * y11;
             }
 
             @Override
@@ -80,7 +110,7 @@ public class DisplayGraphics extends Canvas {
 
             }
         };
-        DrawPointdir(dir,sizes);
+        DrawPointdir(dir, sizes);
         g.drawLine((int) x11, (int) y11, (int) x21, (int) y21);
     }
 
@@ -88,76 +118,80 @@ public class DisplayGraphics extends Canvas {
         Double xdist = sizes[1] - sizes[0];
         double xx = dir.getX();
         Double ydist = (sizes[3] - sizes[2]);
-        double yy =dir.getY();
-        System.out.println(xx+","+yy);
+        double yy = dir.getY();
 
-        g.fillOval((int) xx , (int) yy , 10, 10);
+        g.fillOval((int) xx, (int) yy, 10, 10);
     }
 
-    private double[] checksizes(ArrayList<Point2D> p) {
+    private double[] checksizes(HashMap<Point2D, GeoLocation> p) {
         double xmin = Double.MAX_VALUE;
         double xmax = Double.MIN_VALUE;
         double ymin = Double.MAX_VALUE;
         double ymax = Double.MIN_VALUE;
-        for (int i = 0; i < p.size(); i++) {
+        Object[] t = p.keySet().toArray();
+        for (int i = 0; i < t.length; i++) {
+            Point2D pp = (Point2D) t[i];
 
-            if (p.get(i).getX() < xmin) {
-                xmin = p.get(i).getX();
+            if (pp.getX() < xmin) {
+                xmin = pp.getX();
             }
-            if (p.get(i).getX() > xmax) {
-                xmax = p.get(i).getX();
+            if (pp.getX() > xmax) {
+                xmax = pp.getX();
             }
-            if (p.get(i).getY() < ymin) {
-                ymin = p.get(i).getY();
+            if (pp.getY() < ymin) {
+                ymin = pp.getY();
             }
-            if (p.get(i).getY() > ymax) {
-                ymax = p.get(i).getY();
+            if (pp.getY() > ymax) {
+                ymax = pp.getY();
             }
         }
         return new double[]{xmin, xmax, ymin, ymax};
     }
 
+    public void removeNode(Point2D t) {
+        this.points.remove(t);
+    }
 
     public static void main(String[] args) {
-        //  DisplayGraphics m = new DisplayGraphics();
-        //JFrame f = new JFrame();
-        //f.add(m);
-        //f.setSize(1000, 1000);
 
-
-        // f.setLayout(null);
-        //   f.setVisible(true);
     }
 
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    public void removeEdge(Point2D t, Point2D de) {
+        this.edges.get(t).remove(de);
+
+    }
+
+    public void Addnode(Point2D po, GeoLocation gg) {
+        this.points.put(po, gg);
+    }
+
+    public void updateedge(DirectedWeightedGraph myGraph) {
+        this.edges = TestHash.ed((DirectedWeigtet) myGraph);
+    }
 }
-/**
- * Frame f = new Frame("Menu and MenuItem Example");
- * MenuBar mb = new MenuBar();
- * menu = new Menu("Menu");
- * submenu = new Menu("Algo");
- * submenu1 = new Menu("Graph");
- * i1 = new MenuItem("Graph");
- * //i2.addActionListener(this);
- * i2 = new MenuItem("Algo");
- * <p>
- * i3 = new MenuItem("Load");
- * //i3.addActionListener((ActionListener) this);
- * i4 = new MenuItem("Is connected");
- * i5 = new MenuItem("Delete Node");
- * i6 = new MenuItem("Delete Edge");
- * <p>
- * submenu1.add(i5);
- * submenu1.add(i6);
- * submenu.add(i2);
- * submenu.add(i3);
- * submenu.add(i4);
- * menu.add(submenu);
- * menu.add(submenu1);
- * mb.add(menu);
- * f.setMenuBar(mb);
- * f.paint(g);
- * f.setSize(400, 400);
- * f.setLayout(null);
- * f.setVisible(true);
- */

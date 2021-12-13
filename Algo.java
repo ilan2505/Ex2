@@ -17,13 +17,15 @@ public class Algo implements DirectedWeightedGraphAlgorithms {
     DirectedWeightedGraph e;
 
     public Algo() {
-
         this.e = new DirectedWeigtet();
     }
 
+    /**
+     * this func init to my algo graph
+     * @param g
+     */
     @Override
     public void init(DirectedWeightedGraph g) {
-        // System.out.println(g.nodeSize());
         this.e = g;
     }
 
@@ -31,7 +33,10 @@ public class Algo implements DirectedWeightedGraphAlgorithms {
     public DirectedWeightedGraph getGraph() {
         return this.e;
     }
-
+    /**
+     * this func do deep copy
+     * @param
+     */
     @Override
     public DirectedWeightedGraph copy() {
         HashMap<Integer, NodeData> Node = new HashMap<>();
@@ -55,7 +60,11 @@ public class Algo implements DirectedWeightedGraphAlgorithms {
 
         return c;
     }
-
+    /**
+     * this func check if the graph is connected with 2 help func
+     * the first one check if we can get to all nodes from one node and the second transport the graph
+     * @param
+     */
     @Override
     public boolean isConnected() {
         boolean b = false;
@@ -73,16 +82,27 @@ public class Algo implements DirectedWeightedGraphAlgorithms {
         return b;
     }
 
+    /**
+     * this func find the shorted path distance by check the shorted path dist
+     * @param
+     */
     @Override
     public double shortestPathDist(int src, int dest) {
         return MyShortedPath.minDist(this.e, shortestPath(src, dest));
     }
 
+    /**
+     * this func find the shorted path by help func
+     * @param
+     */
     @Override
     public List<NodeData> shortestPath(int src, int dest) {
         return MyShortedPath.path(this.e, src, dest);
     }
-
+    /**
+     * this func find the center by mat
+     * @param
+     */
     @Override
     public NodeData center() {
         int size = e.nodeSize();
@@ -134,7 +154,10 @@ public class Algo implements DirectedWeightedGraphAlgorithms {
         return e.getNode(center1);
 
     }
-
+    /**
+     * this func find the tsp by help func
+     *
+     */
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
         return Mytsp.checktsp(this.e, cities);

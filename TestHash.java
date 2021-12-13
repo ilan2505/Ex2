@@ -7,10 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import api.DirectedWeightedGraph;
-import api.DirectedWeightedGraphAlgorithms;
-import api.EdgeData;
-import api.NodeData;
+import api.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -65,45 +62,26 @@ public class TestHash {
             EdgeDatas s = new EdgeDatas(src, s3, dest);
             g.connect(src, dest, s3);
         }
-        //   g.removeEdge(0,1);
-        //g.removeEdge(1,0);
         System.out.println(g.edgeSize);
-
-       // g.removeNode(0);
-
         DirectedWeightedGraphAlgorithms al = new Algo();
         al.init(g);
         System.out.println(al.isConnected());
         System.out.println(g.edgeSize);
 
-        //System.out.println(al.center().getKey());
-        // System.out.println("dist=" + al.shortestPath(0, 7));
 
-        //System.out.println(al.center().getKey());
-        //System.out.println(al.shortestPath(0,22));
-        // List<NodeData> AL = al.tsp(al.shortestPath(0, 7));
-        //  System.out.println(AL.size());
-        // for (int i = 0; i < AL.size(); i++) {
-        //   System.out.print(AL.get(i).getKey() + ",");
-
-        //   }
-        //  al.save("D:/10000nodes.json");
-        //  System.out.println(al.tsp(al.shortestPath(0,9)));
-        //
         pp(g);
-        //RunGUiTest.test(al,g);
-        al.save("G4.json");
 
         return g;
     }
 
-    public static List<Point2D> pp(DirectedWeigtet g) {
-        ArrayList<java.awt.geom.Point2D> p = new ArrayList<>();
+    public static HashMap<Point2D, GeoLocation> pp(DirectedWeigtet g) {
+       HashMap<Point2D,GeoLocation> p = new HashMap<>();
         Iterator<NodeData> N = g.nodeIter();
         while (N.hasNext()) {
             NodeData n = N.next();
             double x = n.getLocation().x();
             double y = n.getLocation().y();
+            GeoLocation lo=new MyLoc(x,y,0);
 
             java.awt.geom.Point2D pp = new java.awt.geom.Point2D() {
                 @Override
@@ -121,13 +99,13 @@ public class TestHash {
 
                 }
             };
-            p.add(pp);
+            p.put(pp,lo);
         }
         return p;
     }
 
-    public static ArrayList<Point2D> ed(DirectedWeigtet t) {
-        ArrayList<Point2D> p = new ArrayList<>();
+    public static HashMap<Point2D,HashMap<Point2D,Double>> ed(DirectedWeigtet t) {
+        HashMap<Point2D,HashMap<Point2D,Double>> point2= new HashMap<>();
 
         Iterator<EdgeData> itNode = t.edgeIter();
 
@@ -172,9 +150,17 @@ public class TestHash {
 
                 }
             };
-            p.add(src1);
-            p.add(dest1);
+            HashMap<Point2D,Double> tt=new HashMap();
+            tt.put(dest1, 1.1);
+
+            if (point2.get(src1) != null) {
+
+              point2.get(src1).put(dest1, 0.0);
+            } else {
+                point2.put(src1, tt);
+
+            }
         }
-        return p;
+        return point2;
     }
 }

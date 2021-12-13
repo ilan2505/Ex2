@@ -4,6 +4,9 @@ import api.NodeData;
 
 import java.util.*;
 
+/**
+ * The edges and Nodes do with HashMap
+ */
 public class DirectedWeigtet implements DirectedWeightedGraph {
     HashMap<Integer, NodeData> node;
     int w;

@@ -7,32 +7,39 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AlgoTest {
-        DirectedWeightedGraphAlgorithms algo=new Algo();
+        DirectedWeightedGraphAlgorithms algo=Ex2.getGrapgAlgo("c:/1000nodes.json");
 
+    AlgoTest() throws IOException {
+    }
 
 
     @Test
     void isConnected() throws IOException {
-        algo.load("c:/10000nodes.json");
+        //algo.load("c:/10000nodes.json");
         Assertions.assertTrue(algo.isConnected());
     }
 
     @Test
-    void shortestPathDist() {
-
+    void shortestPathDist() throws IOException {
+       // algo.load("c:/10000nodes.json");
+        algo.shortestPathDist(1,111);
     }
 
     @Test
-    void shortestPath() {
+    void shortestPath() throws IOException {
+      //  algo.load("c:/10000nodes.json");
+        algo.shortestPath(1,111);
+
     }
 
     @Test
     void center() throws IOException {
-          algo.load("c:/10000nodes.json");
-        Assertions.assertEquals(algo.center().getKey(),362);
+        algo.center();
+;
     }
 
     @Test
     void tsp() {
+        algo.tsp(algo.shortestPath(1,4));
     }
 }

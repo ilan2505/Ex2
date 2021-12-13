@@ -4,8 +4,10 @@ import api.NodeData;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-
+/**
+ * this class implant if the graph is connected
+ *
+ */
 public class DFS {
 
     public static DirectedWeightedGraph Trans(DirectedWeightedGraph g) {
@@ -13,7 +15,6 @@ public class DFS {
         Iterator<EdgeData> n = g.edgeIter();
         while (n.hasNext()) {
             EdgeData e = n.next();
-            EdgeData t = new EdgeDatas(e.getDest(), e.getWeight(), e.getSrc());
             trans.removeEdge(e.getSrc(), e.getDest());
             trans.connect(e.getDest(), e.getSrc(), e.getWeight());
         }
