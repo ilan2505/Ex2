@@ -18,6 +18,9 @@ This assignment 3 is dedicated to the design and implementation of data structur
  * 1 000 000 :
 
 # UML of the project :
+<p align="center">
+  <img align="center" width=100% src = "https://user-images.githubusercontent.com/55143087/145866107-1089d813-4451-46c7-a4bf-0969fb9d11f6.png"/>
+</p>
 
 
 # Explanation of how to download, run and use the graphical interface :
