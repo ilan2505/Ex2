@@ -26,6 +26,6 @@ public class MyLoc implements GeoLocation {
 
     @Override
     public double distance(GeoLocation g) {
-        return 0;
+        return Math.sqrt((Math.pow(x-g.x(),2) + Math.pow(y-g.y(),2) + Math.pow(z-g.z(),2)));
     }
 }
