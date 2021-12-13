@@ -17,6 +17,9 @@ This assignment 3 is dedicated to the design and implementation of data structur
  * 100 000 :
  * 1 000 000 :
 
+# UML of the project :
+
+
 # Explanation of how to download, run and use the graphical interface :
 
  
@@ -145,19 +148,22 @@ This assignment 3 is dedicated to the design and implementation of data structur
 
 # Ex2 Contains also these classes :
   * DFS -->
+  * DisplayGraphics -->
   * Ex2 -->
+  * MYwindow -->
   * MenuExample -->
   * MyShortedPath -->
   * Mytsp -->
-  * StdDraw -->
+  * Point2D -->
   * ijframe -->
   
-# There is a folder "Tests" that we are running with JUnit :
-  * MyDirectedWeightedGraphAlgorithmsTest
-  * MyDirectedWeightedGraphTest
-  * MyEdgeDataTest
-  * MyGeoLocationTest
-  * MyNodeDataTest
+# Tests that we are running with JUnit :
+  * AlgoTest -->
+  * DirectedWeigtetTest -->
+  * JFrametest -->
+  * RunGUiTest -->
+  * TestHash -->
+  * iteratortest -->
   
  
  
