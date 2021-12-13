@@ -42,12 +42,12 @@ This assignment 3 is dedicated to the design and implementation of data structur
   The JUNIT test of this class is DirectedWeigtetTest.
  
  Objects of this class :
- * HashMap<Integer, NodeData> node
- * int w
- * int MC
- * HashMap<NodeData, HashMap<NodeData, EdgeData>> edge
- * HashMap<NodeData, HashMap<NodeData, EdgeData>> edgein
- * int edgeSize
+ * HashMap<Integer, NodeData> node;
+ * int w;
+ * int MC;
+ * HashMap<NodeData, HashMap<NodeData, EdgeData>> edge;
+ * HashMap<NodeData, HashMap<NodeData, EdgeData>> edgein;
+ * int edgeSize;
  
  We are going to explains each methods of MyDirectedWeightedGraph :
   * Constructor and copy constructor.
@@ -69,7 +69,7 @@ This assignment 3 is dedicated to the design and implementation of data structur
  The JUNIT test of this class is AlgoTest
  
  Objects of this class :
- * DirectedWeightedGraph e
+ * DirectedWeightedGraph e;
 
  We are going to explains each methods of MyDirectedWeightedGraph :
  * Constructor and copy constructor.
